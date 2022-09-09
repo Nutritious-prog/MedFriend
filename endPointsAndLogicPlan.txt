@@ -1,0 +1,19 @@
+Each patient has one Address, address instance is being created when patient is created (there cannot be any standalone addresses).
+When pateint is created Address is created and they are connected by one to one relation.
+When we want to create an instance of an appointment we need patient (one to one) and treatment(one to many).
+Treatments are premade and when we are creating new appointment we can only select treatments from our premade set.
+So when we create an appointment we fill in the pateints details and from them we will create a new patient
+(or select existing one from drop down menu). Then we select certain treatments and with this information we can create an instance
+of appointment.
+
+/listOfPatients - listing all patients, add patient button, CRUD operations buttons are available next to every patient.
+/addPatient - add patient form
+/editPatient - edit patient form
+
+/listOfTreatments - listing all treatments, add treatment button, CRUD operations buttons are available next to every treatment.
+/addPTreatment - add treatment form
+/editTreatment - edit treatment form
+
+Calendar forms and endpoint isn't yet well discovered and it is hard to predict how we want to cope with this problem
+
+/calendar - showing calendar
