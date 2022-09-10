@@ -18,11 +18,11 @@ public class TreatmentService implements BasicService<Treatment>{
     @Override
     public Treatment create(Treatment treatment) throws InvalidArgumentException, ObjectAlreadyExistsException{
         if(treatment == null)
-            throw new InvalidArgumentException("Passed address is invalid (null).");
+            throw new InvalidArgumentException("Passed treatment is invalid (null).");
         if(checkIfEntityExistsInDb(treatment))
-            throw new ObjectAlreadyExistsException("The same object was already found in database. Creating address failed.");
+            throw new ObjectAlreadyExistsException("The same object was already found in database. Creating treatment failed.");
         if(treatment.getName().isEmpty() || treatment.getPrice() <= 0)
-            throw new InvalidArgumentException("Passed address has invalid parameters.");
+            throw new InvalidArgumentException("Passed treatment has invalid parameters.");
 
         treatmentRepository.save(treatment);
         return treatment;
@@ -46,7 +46,7 @@ public class TreatmentService implements BasicService<Treatment>{
         if (id <= 0)
             throw new InvalidArgumentException("Passed id is invalid.");
         if (newTreatment == null)
-            throw new NullPointerException("New address is null.");
+            throw new NullPointerException("New treatment is null.");
 
         Treatment underChangeTreatment = treatmentRepository.findById(id).get();
 

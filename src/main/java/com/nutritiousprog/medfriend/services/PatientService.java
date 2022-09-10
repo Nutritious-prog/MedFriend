@@ -19,13 +19,15 @@ public class PatientService implements BasicService<Patient> {
     @Override
     public Patient create(Patient patient) throws InvalidArgumentException, ObjectAlreadyExistsException{
         if(patient == null)
-            throw new InvalidArgumentException("Passed address is invalid (null).");
+            throw new InvalidArgumentException("Passed patient is invalid (null).");
         if(checkIfEntityExistsInDb(patient))
-            throw new ObjectAlreadyExistsException("The same object was already found in database. Creating address failed.");
+            throw new ObjectAlreadyExistsException("The same object was already found in database. Creating patient failed.");
         if(patient.getAddress() == null || patient.getName().isEmpty() || patient.getPhoneNumber().isEmpty())
-            throw new InvalidArgumentException("Passed address has invalid parameters.");
+            throw new InvalidArgumentException("Passed patient has invalid parameters.");
 
-        addressService.create(patient.getAddress());
+        if(!addressService.checkIfEntityExistsInDb(patient.getAddress()))
+            addressService.create(patient.getAddress());
+
         patientRepository.save(patient);
         return patient;
     }
@@ -50,17 +52,20 @@ public class PatientService implements BasicService<Patient> {
         if (id <= 0)
             throw new InvalidArgumentException("Passed id is invalid.");
         if (newPatient == null)
-            throw new NullPointerException("New address is null.");
+            throw new NullPointerException("New patient is null.");
 
         Patient underChangePatient = patientRepository.findById(id).get();
 
         if (!checkIfEntityExistsInDb(underChangePatient))
             throw new ObjectNotFoundException("Object with given id was not found in database.");
 
+        addressService.delete(underChangePatient.getAddress().getID());
+
         underChangePatient.setName(newPatient.getName());
         underChangePatient.setPhoneNumber(newPatient.getPhoneNumber());
         underChangePatient.setAddress(newPatient.getAddress());
 
+        addressService.create(newPatient.getAddress());
         patientRepository.save(underChangePatient);
         return newPatient;
     }

@@ -1,8 +1,6 @@
 package com.nutritiousprog.medfriend.model;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -11,6 +9,8 @@ import java.util.List;
 @Entity
 @Table(name = "Appointment")
 @AllArgsConstructor
+@Getter
+@Setter
 @NoArgsConstructor
 @ToString
 public class Appointment {
