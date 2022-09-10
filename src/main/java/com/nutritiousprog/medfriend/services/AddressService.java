@@ -8,7 +8,6 @@ import com.nutritiousprog.medfriend.repositories.AddressRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -22,7 +21,7 @@ public class AddressService implements BasicService<Address> {
     public Address create(Address address) throws InvalidArgumentException, ObjectAlreadyExistsException {
         if(address == null)
             throw new InvalidArgumentException("Passed address is invalid (null).");
-        if(checkIfAddressExists(address))
+        if(checkIfEntityExistsInDb(address))
             throw new ObjectAlreadyExistsException("The same object was already found in database. Creating address failed.");
         if(!isPostalCodeValid(address.getPostalCode()) || address.getStreet().isEmpty() || address.getCity().isEmpty())
             throw new InvalidArgumentException("Passed address has invalid parameters.");
@@ -32,7 +31,7 @@ public class AddressService implements BasicService<Address> {
     }
 
     @Override
-    public Boolean delete(Long id) throws InvalidArgumentException, ObjectNotFoundException {
+    public boolean delete(Long id) throws InvalidArgumentException, ObjectNotFoundException {
         if(id <= 0)
             throw new InvalidArgumentException("Passed argument is invalid.");
 
@@ -53,7 +52,7 @@ public class AddressService implements BasicService<Address> {
 
         Address underChangeAddress = addressRepository.findById(id).get();
 
-        if(!checkIfAddressExists(underChangeAddress))
+        if(!checkIfEntityExistsInDb(underChangeAddress))
             throw new ObjectNotFoundException("Object with given id was not found in database.");
 
         underChangeAddress.setStreet(newAddress.getStreet());
@@ -71,7 +70,7 @@ public class AddressService implements BasicService<Address> {
 
         Address wantedAddress = addressRepository.findById(id).get();
 
-        if(!checkIfAddressExists(wantedAddress))
+        if(!checkIfEntityExistsInDb(wantedAddress))
             throw new ObjectNotFoundException("Object with given id was not found in database.");
 
         return wantedAddress;
@@ -79,16 +78,10 @@ public class AddressService implements BasicService<Address> {
 
     @Override
     public List<Address> getAll() {
-        List<Address> addresses = new ArrayList<>();
-
-        for(Address a : addressRepository.findAll()) {
-            addresses.add(a);
-        }
-
-        return addresses;
+        return (List<Address>) addressRepository.findAll();
     }
 
-    private boolean checkIfAddressExists(Address address) {
+    public boolean checkIfEntityExistsInDb(Address address) {
         Iterable<Address> currentAddresses = addressRepository.findAll();
 
         for(Address a : currentAddresses) {

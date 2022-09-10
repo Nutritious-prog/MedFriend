@@ -7,11 +7,13 @@ import java.util.List;
 public interface BasicService<T> {
     T create(T entity);
 
-    Boolean delete(Long id);
+    boolean delete(Long id);
 
     T update(Long id, T entity);
 
     T getById(Long id);
 
     List<T> getAll();
+
+    boolean checkIfEntityExistsInDb(T entity);
 }
