@@ -60,7 +60,7 @@ public class AddressService implements BasicService<Address> {
         underChangeAddress.setPostalCode(newAddress.getPostalCode());
 
         addressRepository.save(underChangeAddress);
-        return null;
+        return newAddress;
     }
 
     @Override

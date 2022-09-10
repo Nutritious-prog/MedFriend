@@ -62,7 +62,7 @@ public class PatientService implements BasicService<Patient> {
         underChangePatient.setAddress(newPatient.getAddress());
 
         patientRepository.save(underChangePatient);
-        return null;
+        return newPatient;
     }
 
     @Override
