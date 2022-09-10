@@ -17,7 +17,7 @@ import java.util.Objects;
 public class Treatment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long item_ID;
+    private Long ID;
     @Column(name = "name", nullable = false)
     private String name;
     @Column(name = "price", nullable = false)
@@ -38,6 +38,6 @@ public class Treatment {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getItem_ID(), getName(), getPrice());
+        return Objects.hash(getID(), getName(), getPrice());
     }
 }

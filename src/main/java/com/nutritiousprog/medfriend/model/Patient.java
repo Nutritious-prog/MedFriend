@@ -15,7 +15,7 @@ import java.util.Objects;
 public class Patient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long client_ID;
+    private Long ID;
     @Column(name = "name", columnDefinition = "TEXT")
     private String name;
     @OneToOne(cascade = {CascadeType.ALL})
