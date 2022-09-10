@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -22,9 +23,12 @@ public class Appointment {
     @OneToMany(cascade = {CascadeType.ALL})
     @JoinColumn(name = "treatment_id", referencedColumnName = "ID")
     private List<Treatment> treatment;
+    @Column(name = "date")
+    LocalDateTime dateTime;
 
-    public Appointment(Patient patient, List<Treatment> treatment) {
+    public Appointment(Patient patient, List<Treatment> treatment, LocalDateTime dateTime) {
         this.patient = patient;
         this.treatment = treatment;
+        this.dateTime = dateTime;
     }
 }

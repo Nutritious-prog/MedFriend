@@ -8,7 +8,6 @@ public class MedFriendApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(MedFriendApplication.class, args);
-        System.out.println("Test");
     }
 
 }
