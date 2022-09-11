@@ -52,8 +52,9 @@ public class AddressService implements BasicService<Address> {
 
         Address underChangeAddress = addressRepository.findById(id).get();
 
-        if(!checkIfEntityExistsInDb(underChangeAddress))
-            throw new ObjectNotFoundException("Object with given id was not found in database.");
+        boolean exists = addressRepository.existsById(id);
+        if (!exists)
+            throw new ObjectNotFoundException("Object not found in database. Updating address failed.");
 
         underChangeAddress.setStreet(newAddress.getStreet());
         underChangeAddress.setCity(newAddress.getCity());
@@ -81,6 +82,7 @@ public class AddressService implements BasicService<Address> {
         return (List<Address>) addressRepository.findAll();
     }
 
+    @Override
     public boolean checkIfEntityExistsInDb(Address address) {
         Iterable<Address> currentAddresses = addressRepository.findAll();
 
