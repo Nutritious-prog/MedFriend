@@ -43,6 +43,8 @@ public class AddressServiceTest {
         autoCloseable.close();
     }
 
+    /** CREATE */
+
     @Test
     void createAddressWithValidInput() {
         //given
@@ -138,6 +140,8 @@ public class AddressServiceTest {
         verify(addressRepository, never()).save(any());
     }
 
+    /** DELETE */
+
     @Test
     void deleteAddressWithValidInput() {
         // given
@@ -180,6 +184,8 @@ public class AddressServiceTest {
         verify(addressRepository, never()).deleteById(any());
     }
 
+    /** UPDATE */
+
     @Test
     void updateAddressWithValidInput() {
         //given
@@ -201,7 +207,7 @@ public class AddressServiceTest {
     }
 
     @Test
-    void updateAddressWithIdLessThanZero() {
+    void updateAddressWithIdParameterLessThanZero() {
         //given
         long id = -10;
         Address a1 = new Address("Colourful 5b", "London", "12-345");
@@ -247,6 +253,56 @@ public class AddressServiceTest {
     }
 
     @Test
+    void updateAddressWithInvalidStreet(){
+        //given
+        long id = 10;
+        Address a = new Address("", "London", "12-345");
+
+        //when
+        assertThatThrownBy(
+                () -> underTest.update(id, a))
+                .isInstanceOf(InvalidArgumentException.class)
+                .hasMessageContaining("Passed address has invalid parameters.");
+
+        //then
+        verify(addressRepository, never()).save(any());
+    }
+
+    @Test
+    void updateAddressWithInvalidCity(){
+        //given
+        long id = 10;
+        Address a = new Address("Long 15b", "", "12-345");
+
+        //when
+        assertThatThrownBy(
+                () -> underTest.update(id, a))
+                .isInstanceOf(InvalidArgumentException.class)
+                .hasMessageContaining("Passed address has invalid parameters.");
+
+        //then
+        verify(addressRepository, never()).save(any());
+    }
+
+    @Test
+    void updateAddressWithInvalidPostalCode(){
+        //given
+        long id = 10;
+        Address a = new Address("Long 15b", "London", "1234");
+
+        //when
+        assertThatThrownBy(
+                () -> underTest.update(id, a))
+                .isInstanceOf(InvalidArgumentException.class)
+                .hasMessageContaining("Passed address has invalid parameters.");
+
+        //then
+        verify(addressRepository, never()).save(any());
+    }
+
+    /** getById */
+
+    @Test
     void getByIdWithValidInput() {
         //given
         long id = 10;
@@ -274,6 +330,8 @@ public class AddressServiceTest {
         //then
         verify(addressRepository, never()).findById(any());
     }
+
+    /** checkIfEntityExistsInDb */
 
     @Test
     void checkIfEntityExistsInDb() {
@@ -304,6 +362,8 @@ public class AddressServiceTest {
         //then
         assertThat(exists).isFalse();
     }
+
+    /** isPostalCodeValid */
 
     @Test
     void isPostalCodeValidWithValidInput() {

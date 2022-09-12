@@ -49,6 +49,8 @@ public class AddressService implements BasicService<Address> {
             throw new InvalidArgumentException("Passed id is invalid.");
         if(newAddress == null)
             throw new NullPointerException("New address is null.");
+        if(!isPostalCodeValid(newAddress.getPostalCode()) || newAddress.getStreet().isEmpty() || newAddress.getCity().isEmpty())
+            throw new InvalidArgumentException("Passed address has invalid parameters.");
 
         Address underChangeAddress = addressRepository.findById(id).get();
 

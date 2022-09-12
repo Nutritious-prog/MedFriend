@@ -47,11 +47,14 @@ public class TreatmentService implements BasicService<Treatment>{
             throw new InvalidArgumentException("Passed id is invalid.");
         if (newTreatment == null)
             throw new NullPointerException("New treatment is null.");
+        if(newTreatment.getName().isEmpty() || newTreatment.getPrice() <= 0)
+            throw new InvalidArgumentException("Passed treatment has invalid parameters.");
 
         Treatment underChangeTreatment = treatmentRepository.findById(id).get();
 
-        if (!checkIfEntityExistsInDb(underChangeTreatment))
-            throw new ObjectNotFoundException("Object with given id was not found in database.");
+        boolean exists = treatmentRepository.existsById(id);
+        if (!exists)
+            throw new ObjectNotFoundException("Object not found in database. Updating address failed.");
 
         underChangeTreatment.setName(newTreatment.getName());
         underChangeTreatment.setPrice(newTreatment.getPrice());
@@ -65,12 +68,7 @@ public class TreatmentService implements BasicService<Treatment>{
         if(id <= 0)
             throw new InvalidArgumentException("Passed id is invalid.");
 
-        Treatment wantedTreatment = treatmentRepository.findById(id).get();
-
-        if(!checkIfEntityExistsInDb(wantedTreatment))
-            throw new ObjectNotFoundException("Object with given id was not found in database.");
-
-        return wantedTreatment;
+        return treatmentRepository.findById(id).get();
     }
 
     @Override
