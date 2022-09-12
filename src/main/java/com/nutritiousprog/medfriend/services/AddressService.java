@@ -69,12 +69,7 @@ public class AddressService implements BasicService<Address> {
         if(id <= 0)
             throw new InvalidArgumentException("Passed id is invalid.");
 
-        Address wantedAddress = addressRepository.findById(id).get();
-
-        if(!checkIfEntityExistsInDb(wantedAddress))
-            throw new ObjectNotFoundException("Object with given id was not found in database.");
-
-        return wantedAddress;
+        return addressRepository.findById(id).get();
     }
 
     @Override
@@ -94,7 +89,7 @@ public class AddressService implements BasicService<Address> {
         return false;
     }
 
-    private boolean isPostalCodeValid(String postalCode) {
+    public boolean isPostalCodeValid(String postalCode) {
         String regex = "^[0-9]{2}\\-[0-9]{3}$"; // "Available patterns "12-345", "09-876" etc."
 
         Pattern pattern = Pattern.compile(regex);

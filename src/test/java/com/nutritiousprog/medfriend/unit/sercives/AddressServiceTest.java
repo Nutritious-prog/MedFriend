@@ -20,8 +20,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.assertj.core.api.AssertionsForClassTypes.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
@@ -253,14 +252,80 @@ public class AddressServiceTest {
         long id = 10;
         Address a = new Address("Long 14c", "London", "12-345");
 
+        given(addressRepository.findById(id)).willReturn(Optional.of(a));
+
         //when
         underTest.getById(id);
 
         //then
-        ArgumentCaptor<Address> argumentCaptor = ArgumentCaptor.forClass(Address.class);
+        verify(addressRepository).findById(id);
+    }
 
-        verify(addressRepository).save(argumentCaptor.capture());
+    @Test
+    void getByIdWithInvalidIdParameter() {
+        //given
+        long id = -10;
 
-        assertThat(argumentCaptor.getValue()).isEqualTo(a);
+        //when
+        assertThatThrownBy(() -> underTest.getById(id))
+                .isInstanceOf(InvalidArgumentException.class)
+                .hasMessageContaining("Passed id is invalid.");
+
+        //then
+        verify(addressRepository, never()).findById(any());
+    }
+
+    @Test
+    void checkIfEntityExistsInDb() {
+        //given
+        Address a1 = new Address("Colourful 5b", "London", "12-345");
+        List<Address> addresses = new ArrayList<>();
+        addresses.add(a1);
+        underTest.create(a1);
+        given(addressRepository.findAll()).willReturn(addresses);
+
+        //when
+        boolean exists = underTest.checkIfEntityExistsInDb(a1);
+
+        //then
+        assertThat(exists).isTrue();
+    }
+
+    @Test
+    void checkIfEntityDoesNotExistsInDb() {
+        //given
+        Address a1 = new Address("Colourful 5b", "London", "12-345");
+        List<Address> addresses = new ArrayList<>();
+        given(addressRepository.findAll()).willReturn(addresses);
+
+        //when
+        boolean exists = underTest.checkIfEntityExistsInDb(a1);
+
+        //then
+        assertThat(exists).isFalse();
+    }
+
+    @Test
+    void isPostalCodeValidWithValidInput() {
+        //given
+        String validPostalCode = "12-345";
+
+        //when
+        boolean isValid = underTest.isPostalCodeValid(validPostalCode);
+
+        //then
+        assertThat(isValid).isTrue();
+    }
+
+    @Test
+    void isPostalCodeValidWithInvalidInput() {
+        //given
+        String invalidPostalCode = "1234";
+
+        //when
+        boolean isInvalid = underTest.isPostalCodeValid(invalidPostalCode);
+
+        //then
+        assertThat(isInvalid).isFalse();
     }
 }
