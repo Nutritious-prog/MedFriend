@@ -4,17 +4,25 @@ import com.nutritiousprog.medfriend.exceptions.InvalidArgumentException;
 import com.nutritiousprog.medfriend.exceptions.ObjectAlreadyExistsException;
 import com.nutritiousprog.medfriend.exceptions.ObjectNotFoundException;
 import com.nutritiousprog.medfriend.model.Patient;
+import com.nutritiousprog.medfriend.repositories.AddressRepository;
 import com.nutritiousprog.medfriend.repositories.PatientRepository;
-import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
-@AllArgsConstructor
+@Component
 public class PatientService implements BasicService<Patient> {
     PatientRepository patientRepository;
-    AddressService addressService;
+    AddressRepository addressRepository;
+
+    public PatientService(PatientRepository patientRepository, AddressRepository addressRepository) {
+        this.patientRepository = patientRepository;
+        this.addressRepository = addressRepository;
+    }
 
     @Override
     public Patient create(Patient patient) throws InvalidArgumentException, ObjectAlreadyExistsException{
@@ -22,11 +30,11 @@ public class PatientService implements BasicService<Patient> {
             throw new InvalidArgumentException("Passed patient is invalid (null).");
         if(checkIfEntityExistsInDb(patient))
             throw new ObjectAlreadyExistsException("The same object was already found in database. Creating patient failed.");
-        if(patient.getAddress() == null || patient.getName().isEmpty() || patient.getPhoneNumber().isEmpty())
+        if(patient.getAddress() == null || patient.getName().isEmpty() || !isPhoneNumberValid(patient.getPhoneNumber()))
             throw new InvalidArgumentException("Passed patient has invalid parameters.");
 
-        if(!addressService.checkIfEntityExistsInDb(patient.getAddress()))
-            addressService.create(patient.getAddress());
+        if(addressRepository.findById(patient.getAddress().getID()) == null)
+            addressRepository.save(patient.getAddress());
 
         patientRepository.save(patient);
         return patient;
@@ -41,7 +49,7 @@ public class PatientService implements BasicService<Patient> {
         if (!exists)
             throw new ObjectNotFoundException("Object not found in database. Deleting address failed.");
 
-        addressService.delete(patientRepository.findById(id).get().getID());
+        addressRepository.delete(patientRepository.findById(id).get().getAddress());
         patientRepository.deleteById(id);
 
         return true;
@@ -59,13 +67,13 @@ public class PatientService implements BasicService<Patient> {
         if (!checkIfEntityExistsInDb(underChangePatient))
             throw new ObjectNotFoundException("Object with given id was not found in database.");
 
-        addressService.delete(underChangePatient.getAddress().getID());
+        addressRepository.delete(underChangePatient.getAddress());
 
         underChangePatient.setName(newPatient.getName());
         underChangePatient.setPhoneNumber(newPatient.getPhoneNumber());
         underChangePatient.setAddress(newPatient.getAddress());
 
-        addressService.create(newPatient.getAddress());
+        addressRepository.save(newPatient.getAddress());
         patientRepository.save(underChangePatient);
         return newPatient;
     }
@@ -98,5 +106,14 @@ public class PatientService implements BasicService<Patient> {
             }
         }
         return false;
+    }
+
+    public boolean isPhoneNumberValid(String phoneNumber) {
+        String regex = "^[0-9]{9}"; // Available patterns "123456789"
+
+        Pattern pattern = Pattern.compile(regex);
+
+        Matcher matcher = pattern.matcher(phoneNumber);
+        return matcher.matches();
     }
 }
