@@ -33,24 +33,24 @@ public class PatientService implements BasicService<Patient> {
         if(patient.getAddress() == null || patient.getName().isEmpty() || !isPhoneNumberValid(patient.getPhoneNumber()))
             throw new InvalidArgumentException("Passed patient has invalid parameters.");
 
-        if(addressRepository.findById(patient.getAddress().getID()) == null)
-            addressRepository.save(patient.getAddress());
-
         patientRepository.save(patient);
+        addressRepository.save(patient.getAddress());
         return patient;
     }
 
     @Override
     public boolean delete(Long id) throws InvalidArgumentException, ObjectNotFoundException {
-        if(id <= 0)
+        if(id < 0)
             throw new InvalidArgumentException("Passed id is invalid.");
 
         boolean exists = patientRepository.existsById(id);
         if (!exists)
-            throw new ObjectNotFoundException("Object not found in database. Deleting address failed.");
+            throw new ObjectNotFoundException("Object not found in database. Deleting patient failed.");
 
-        addressRepository.delete(patientRepository.findById(id).get().getAddress());
+        //Address addressToDelete = patientRepository.findById(id).get().getAddress();
+
         patientRepository.deleteById(id);
+        //addressRepository.delete(addressToDelete);
 
         return true;
     }
@@ -64,7 +64,8 @@ public class PatientService implements BasicService<Patient> {
 
         Patient underChangePatient = patientRepository.findById(id).get();
 
-        if (!checkIfEntityExistsInDb(underChangePatient))
+        boolean exists = patientRepository.existsById(id);
+        if (!exists)
             throw new ObjectNotFoundException("Object with given id was not found in database.");
 
         addressRepository.delete(underChangePatient.getAddress());
@@ -85,7 +86,7 @@ public class PatientService implements BasicService<Patient> {
 
         Patient wantedPatient = patientRepository.findById(id).get();
 
-        if(!checkIfEntityExistsInDb(wantedPatient))
+        if (wantedPatient == null)
             throw new ObjectNotFoundException("Object with given id was not found in database.");
 
         return wantedPatient;

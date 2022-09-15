@@ -170,7 +170,7 @@ public class AddressServiceTest {
     }
 
     @Test
-    void deleteAddressThrowingExcWhenClientNotFound(){
+    void deleteAddressThrowingExcWhenAddressNotFound(){
         //given
         long id = 10;
         given(addressRepository.existsById(id)).willReturn(false);

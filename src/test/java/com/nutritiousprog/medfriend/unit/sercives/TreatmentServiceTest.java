@@ -156,7 +156,7 @@ public class TreatmentServiceTest {
     }
 
     @Test
-    void deleteTreatmentThrowingExcWhenClientNotFound(){
+    void deleteTreatmentThrowingExcWhenTreatmentNotFound(){
         //given
         long id = 10;
         given(treatmentRepository.existsById(id)).willReturn(false);
