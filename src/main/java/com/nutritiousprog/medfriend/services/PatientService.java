@@ -99,6 +99,9 @@ public class PatientService implements BasicService<Patient> {
 
     @Override
     public boolean checkIfEntityExistsInDb(Patient patient) {
+        if(patient.getName() == null || patient.getPhoneNumber() == null || patient.getAddress() == null || patient.getID() == null) {
+            return false;
+        }
         Iterable<Patient> currentPatients = patientRepository.findAll();
 
         for(Patient p : currentPatients) {

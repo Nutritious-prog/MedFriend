@@ -18,11 +18,11 @@ public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ID;
-    @Column(name = "street", nullable = false, columnDefinition = "TEXT")
+    @Column(name = "street")
     private String street;
-    @Column(name = "city", nullable = false, columnDefinition = "TEXT")
+    @Column(name = "city")
     private String city;
-    @Column(name = "postal_code", nullable = false, columnDefinition = "TEXT")
+    @Column(name = "postal_code")
     private String postalCode;
 
     public Address(String street, String city, String postalCode) {
