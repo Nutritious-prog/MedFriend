@@ -390,6 +390,8 @@ public class PatientServiceTest {
         assertThat(exists).isFalse();
     }
 
+    /** isPhoneNumberValid */
+
     @Test
     void isPhoneNumberValid() {
         //given

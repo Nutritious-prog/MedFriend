@@ -6,6 +6,8 @@ import com.nutritiousprog.medfriend.exceptions.ObjectNotFoundException;
 import com.nutritiousprog.medfriend.model.Appointment;
 import com.nutritiousprog.medfriend.model.Treatment;
 import com.nutritiousprog.medfriend.repositories.AppointmentRepository;
+import com.nutritiousprog.medfriend.repositories.PatientRepository;
+import com.nutritiousprog.medfriend.repositories.TreatmentRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +17,8 @@ import java.util.List;
 @AllArgsConstructor
 public class AppointmentService implements BasicService<Appointment> {
     private AppointmentRepository appointmentRepository;
-    private TreatmentService treatmentService;
-    private PatientService patientService;
+    private TreatmentRepository treatmentRepository;
+    private PatientRepository patientRepository;
 
     @Override
     public Appointment create(Appointment appointment) throws InvalidArgumentException, ObjectAlreadyExistsException{
@@ -24,13 +26,11 @@ public class AppointmentService implements BasicService<Appointment> {
             throw new InvalidArgumentException("Passed appointment is invalid (null).");
         if(checkIfEntityExistsInDb(appointment))
             throw new ObjectAlreadyExistsException("There cannot be two appointments at the same  time. Creating appointment failed.");
-        if(appointment.getPatient() ==null || appointment.getTreatment() == null || appointment.getDateTime() == null)
+        if(appointment.getPatient() == null || appointment.getTreatment() == null || appointment.getDateTime() == null)
             throw new InvalidArgumentException("Passed appointment has invalid parameters.");
 
-        if(!patientService.checkIfEntityExistsInDb(appointment.getPatient()))
-            patientService.create(appointment.getPatient());
-
         appointmentRepository.save(appointment);
+        patientRepository.save(appointment.getPatient());
         return appointment;
     }
 
@@ -41,7 +41,7 @@ public class AppointmentService implements BasicService<Appointment> {
 
         boolean exists = appointmentRepository.existsById(id);
         if (!exists)
-            throw new ObjectNotFoundException("Object not found in database. Deleting address failed.");
+            throw new ObjectNotFoundException("Object not found in database. Deleting appointment failed.");
 
         appointmentRepository.deleteById(id);
 
@@ -57,15 +57,16 @@ public class AppointmentService implements BasicService<Appointment> {
 
         Appointment underChangeAppointment = appointmentRepository.findById(id).get();
 
-        if (!checkIfEntityExistsInDb(underChangeAppointment))
+        boolean exists = appointmentRepository.existsById(id);
+        if (!exists)
             throw new ObjectNotFoundException("Object with given id was not found in database.");
 
         underChangeAppointment.setPatient(newAppointment.getPatient());
         underChangeAppointment.setTreatment(newAppointment.getTreatment());
         underChangeAppointment.setDateTime(newAppointment.getDateTime());
 
-        patientService.create(newAppointment.getPatient());
-        for(Treatment t : newAppointment.getTreatment()) treatmentService.create(t);
+        patientRepository.save(newAppointment.getPatient());
+        for(Treatment t : newAppointment.getTreatment()) treatmentRepository.save(t);
         appointmentRepository.save(underChangeAppointment);
         return newAppointment;
     }
@@ -77,7 +78,7 @@ public class AppointmentService implements BasicService<Appointment> {
 
         Appointment wantedAppointment = appointmentRepository.findById(id).get();
 
-        if(!checkIfEntityExistsInDb(wantedAppointment))
+        if (wantedAppointment == null)
             throw new ObjectNotFoundException("Object with given id was not found in database.");
 
         return wantedAppointment;

@@ -16,8 +16,8 @@ import java.util.regex.Pattern;
 @Service
 @Component
 public class PatientService implements BasicService<Patient> {
-    PatientRepository patientRepository;
-    AddressRepository addressRepository;
+    private PatientRepository patientRepository;
+    private AddressRepository addressRepository;
 
     public PatientService(PatientRepository patientRepository, AddressRepository addressRepository) {
         this.patientRepository = patientRepository;
