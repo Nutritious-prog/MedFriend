@@ -19,10 +19,12 @@ public class AddressService implements BasicService<Address> {
 
     @Override
     public Address create(Address address) throws InvalidArgumentException, ObjectAlreadyExistsException {
-//        if(address == null)
-//            throw new InvalidArgumentException("Passed address is invalid (null).");
-//        if(checkIfEntityExistsInDb(address))
-//            throw new ObjectAlreadyExistsException("The same object was already found in database. Creating address failed.");
+        if(address == null)
+            throw new InvalidArgumentException("Passed address is invalid (null).");
+        if(checkIfEntityExistsInDb(address))
+            throw new ObjectAlreadyExistsException("The same object was already found in database. Creating address failed.");
+        if(address.getStreet().isBlank() || address.getCity().isBlank() || !isPostalCodeValid(address.getPostalCode()))
+            throw new InvalidArgumentException("Passed address has invalid parameters.");
 
         addressRepository.save(address);
         return address;

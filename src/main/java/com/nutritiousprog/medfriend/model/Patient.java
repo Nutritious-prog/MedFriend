@@ -21,7 +21,8 @@ public class Patient {
     @Column(name = "name", columnDefinition = "TEXT")
     private String name;
     @OneToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name = "address_id", referencedColumnName = "ID")
+    @JoinColumn(name = "address_id",
+            referencedColumnName = "ID")
     private Address address;
     @Column(name = "phone_number")
     private String phoneNumber;
