@@ -30,7 +30,7 @@ public class PatientService implements BasicService<Patient> {
             throw new InvalidArgumentException("Passed patient is invalid (null).");
         if(checkIfEntityExistsInDb(patient))
             throw new ObjectAlreadyExistsException("The same object was already found in database. Creating patient failed.");
-        if(patient.getAddress() == null || patient.getName().isEmpty() || !isPhoneNumberValid(patient.getPhoneNumber()))
+        if(patient.getName().isEmpty() || !isPhoneNumberValid(patient.getPhoneNumber()))
             throw new InvalidArgumentException("Passed patient has invalid parameters.");
 
         patientRepository.save(patient);
