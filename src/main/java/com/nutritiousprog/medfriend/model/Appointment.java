@@ -1,5 +1,6 @@
 package com.nutritiousprog.medfriend.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import javax.persistence.*;
@@ -24,7 +25,8 @@ public class Appointment {
     @JoinColumn(name = "treatment_id", referencedColumnName = "ID")
     private List<Treatment> treatment;
     @Column(name = "date")
-    LocalDateTime dateTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    private LocalDateTime dateTime;
 
     public Appointment(Patient patient, List<Treatment> treatment, LocalDateTime dateTime) {
         this.patient = patient;
