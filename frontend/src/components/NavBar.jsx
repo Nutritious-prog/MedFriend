@@ -27,9 +27,14 @@ const NavBar = () => {
                 <button className='px-8 py-3'>Sign Up</button>
             </div>
             <div className='md:hidden mr-4' onClick={handleClick}>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12" />
-            </svg>
+            {!nav ?
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12" />
+                </svg> :
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            }
             </div>
         </div>
 
@@ -41,7 +46,7 @@ const NavBar = () => {
           <li className='border-b-2 border-zinc-300 w-full'><Link onClick={handleClose} to="pricing" smooth={true} offset={-50} duration={500}>Pricing</Link></li>
 
         <div className='flex flex-col my-4'>
-            <button className='bg-transparent text-indigo-600 px-8 py-3 mb-4 w-[60%] m-auto'>Sign In</button>
+            <button className='bg-transparent text-blue-700 px-8 py-3 mb-4 w-[60%] m-auto'>Sign In</button>
             <button className='px-8 py-3 w-[60%] m-auto'>Sign Up</button>
         </div>
       </ul>
