@@ -1,13 +1,17 @@
 import React from 'react'
+import { useNavigate } from "react-router-dom";
 
 function Login() {
+  const navigate = useNavigate();
+  const goToRegister = () => navigate("/signUp");
+
   return (
     <>
       <div className='bg-zinc-200 min-h-screen flex items-center justify-center'>
         <div className='bg-gray-100 flex rounded-2xl shadow-lg max-w-3xl p-5 items-center'>
           <div className='md:w-1/2 px-8 md:px-16'>
             <h2 className='font-thin text-2xl text-blue-700'>Login</h2>
-            <p className='text-xs mt-4 text-blue-700'>If you are not a member, easily sign up here!</p>
+            <p className='text-xs mt-4 text-blue-700'>If you are already a member, easily log in</p>
 
             <form action="" className="flex flex-col gap-4">
               <input className='p-2 mt-8 rounded-xl border' type="email" name="email" placeholder="Email" />
@@ -43,7 +47,7 @@ function Login() {
 
             <div className="mt-3 text-xs flex justify-between items-center text-blue-700">
               <p>Don't have an account?</p>
-              <button className="py-2 px-5 bg-white border rounded-xl hover:scale-110 duration-300 text-black">Register</button>
+              <button className="py-2 px-5 bg-white border rounded-xl hover:scale-110 duration-300 text-black" onClick={goToRegister}>Register</button>
             </div>
 
 
