@@ -12,7 +12,7 @@ const Home = () => {
                 <p className='text-2xl font-thin'>Unique Client & Time Management</p>
                 <h1 className='py-3 text-5xl md:text-7xl font-thin'>Your personal assistant.</h1>
                 <p className='text-2xl font-thin'>Because we value your time.</p>
-                <button className='py-3 px-6 sm:w-[60%] my-4'>Get Started</button>
+                <button className='py-3 px-6 sm:w-[60%] my-4 hover:scale-105 duration-300'>Get Started</button>
             </div>
             <div>
                 <img className='hidden md:flex' src={bgImg} alt="/" />

@@ -33,7 +33,7 @@ const Pricing = () => {
                 <p className='flex py-4 text-gray-300'><FaCheckDouble className='w-8 mr-5 text-gray-300'  />Lorem, ipsum dolor.</p>
                 <p className='flex py-4 text-gray-300'><FaCheckDouble className='w-8 mr-5 text-gray-300'  />Lorem, ipsum dolor.</p>
                 <p className='flex py-4 text-gray-300'><FaCheckDouble className='w-8 mr-5 text-gray-300'  />Lorem, ipsum dolor.</p>
-                <button className='w-full py-4 my-4'>Get Started</button>
+                <button className='w-full py-4 my-4 hover:scale-105 duration-300'>Get Started</button>
             </div>
           </div>
           <div className='bg-white text-slate-900 m-4 p-8 rounded-xl shadow-2xl relative'>
@@ -48,7 +48,7 @@ const Pricing = () => {
                 <p className='flex py-4'><FaCheckDouble className='w-8 mr-5 text-green-600'  />Lorem, ipsum dolor.</p>
                 <p className='flex py-4'><FaCheckDouble className='w-8 mr-5 text-green-600'  />Lorem, ipsum dolor.</p>
                 <p className='flex py-4'><FaCheckDouble className='w-8 mr-5 text-green-600'  />Lorem, ipsum dolor.</p>
-                <button className='w-full py-4 my-4'>Get Started</button>
+                <button className='w-full py-4 my-4 hover:scale-105 duration-300'>Get Started</button>
             </div>
           </div>
         </div>

@@ -10,15 +10,15 @@ const About = () => {
             </div>
 
             <div className='grid md:grid-cols-3 gap-1 px-2 text-center'>
-                <div className='border py-8 rounded-xl shadow-xl' >
+                <div className='border py-8 rounded-xl shadow-xl hover:scale-105 duration-300' >
                     <p className='text-6xl font-bold text-blue-700'>100%</p>
                     <p className='text-gray-400 mt-2'>Satisfaction</p>
                 </div>
-                <div className='border py-8 rounded-xl shadow-xl' >
+                <div className='border py-8 rounded-xl shadow-xl hover:scale-105 duration-300' >
                     <p className='text-6xl font-bold text-blue-700'>#1</p>
                     <p className='text-gray-400 mt-2'>In the industry</p>
                 </div>
-                <div  className='border py-8 rounded-xl shadow-xl' >
+                <div  className='border py-8 rounded-xl shadow-xl hover:scale-105 duration-300' >
                     <p className='text-6xl font-bold text-blue-700'>24/7</p>
                     <p className='text-gray-400 mt-2'>Workflow</p>
                 </div>

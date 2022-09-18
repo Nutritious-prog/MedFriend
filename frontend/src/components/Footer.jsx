@@ -56,7 +56,7 @@ const Footer = () => {
                 <p className='py-4'>The latest news, articles, and resources, sent to your inbox weekly.</p>
                 <form className='flex flex-col sm:flex-row'>
                     <input className='w-full p-2 mr-4 rounded-md mb-4' type="email" placeholder='Enter email..'/>
-                    <button className='p-2 mb-4'>Subscribe</button>
+                    <button className='p-2 mb-4 hover:scale-105 duration-300'>Subscribe</button>
                 </form>
             </div>
         </div>

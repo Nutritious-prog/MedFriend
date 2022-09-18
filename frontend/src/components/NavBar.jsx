@@ -1,11 +1,16 @@
 import React, {useState} from 'react';
+import { useNavigate } from "react-router-dom";
 import { Link, animateScroll as scroll, } from 'react-scroll'
 
 const NavBar = () => {
     const [nav, setNav] = useState(false)
+    const navigate = useNavigate();
+
     const handleClick = () => setNav(!nav)
 
     const handleClose =()=> setNav(!nav)
+    const goToSignIn = () => navigate("/login");
+    const goToSignUp = () => navigate("/signUp");
 
   return (
     <div className='w-screen h-[80px] z-10 bg-zinc-200 fixed drop-shadow-lg'>
@@ -21,10 +26,10 @@ const NavBar = () => {
                 </ul>
             </div>
             <div className='hidden md:flex pr-4'>
-                <button className='border-none bg-transparent text-black mr-4'>
+                <button className='border-none bg-transparent text-black mr-4' onClick={goToSignIn}>
                     Sign In
                 </button>
-                <button className='px-8 py-3'>Sign Up</button>
+                <button className='px-8 py-3 hover:scale-105 duration-300' onClick={goToSignUp}>Sign Up</button>
             </div>
             <div className='md:hidden mr-4' onClick={handleClick}>
             {!nav ?
@@ -46,8 +51,8 @@ const NavBar = () => {
           <li className='border-b-2 border-zinc-300 w-full hover:cursor-pointer'><Link onClick={handleClose} to="pricing" smooth={true} offset={-50} duration={500}>Pricing</Link></li>
 
         <div className='flex flex-col my-4'>
-            <button className='bg-transparent text-blue-700 px-8 py-3 mb-4 w-[60%] m-auto'>Sign In</button>
-            <button className='px-8 py-3 w-[60%] m-auto'>Sign Up</button>
+            <button className='bg-transparent text-blue-700 px-8 py-3 mb-4 w-[60%] m-auto' onClick={goToSignIn}>Sign In</button>
+            <button className='px-8 py-3 w-[60%] m-auto hover:scale-105 duration-300' onClick={goToSignUp}>Sign Up</button>
         </div>
       </ul>
     </div>

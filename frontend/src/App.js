@@ -1,22 +1,21 @@
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
-import About from './components/About';
-import AllInOne from './components/AllInOne';
-import Footer from './components/Footer';
-import Home from './components/Home';
-import NavBar from './components/NavBar';
-import Pricing from './components/Pricing';
-import Support from './components/Support';
+import Login from './components/Login';
+import MainPage from './components/MainPage';
+import SignUp from './components/SignUp';
+
 
 function App() {
   return (
     <>
-      <NavBar/>
-      <Home />
-      <About />
-      <Support />
-      <AllInOne />
-      <Pricing />
-      <Footer/>
+    <BrowserRouter>
+      <Routes>
+        <Route index element={<MainPage/>}></Route>
+        <Route path='/' element={<MainPage/>}></Route>
+        <Route path='/login' element={<Login/>}></Route>
+        <Route path='/signUp' element={<SignUp/>}></Route>
+      </Routes>
+    </BrowserRouter>
     </>
   );
 }
