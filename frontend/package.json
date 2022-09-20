@@ -10,6 +10,7 @@
     "@mui/material": "^5.10.5",
     "@syncfusion/ej2-base": "^20.2.48",
     "@syncfusion/ej2-react-base": "^20.2.45",
+    "@syncfusion/ej2-react-grids": "^20.2.49",
     "@syncfusion/ej2-react-popups": "^20.2.49",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",

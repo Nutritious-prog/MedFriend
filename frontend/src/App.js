@@ -4,6 +4,7 @@ import Dashboard from './pages/Dashboard';
 import Login from './components/logins/Login';
 import MainPage from './pages/MainPage';
 import SignUp from './components/logins/SignUp';
+import Patients from './components/dashboard/Patients';
 
 
 function App() {
@@ -18,7 +19,7 @@ function App() {
         <Route path='/dashboard/home' element={<Dashboard/>}></Route>
         <Route path='/dashboard/schedule' element={<Dashboard/>}></Route>
         <Route path='/dashboard/staff' element={<Dashboard/>}></Route>
-        <Route path='/dashboard/patients' element={<Dashboard/>}></Route>
+        <Route path='/dashboard/patients' element={<Patients/>}></Route>
         <Route path='/dashboard/options' element={<Dashboard/>}></Route>
       </Routes>
     </BrowserRouter>
