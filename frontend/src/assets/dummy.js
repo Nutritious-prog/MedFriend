@@ -887,7 +887,7 @@ export const ordersGrid = [
     field: 'name',
     headerText: 'Full Name',
     width: '150',
-    editType: 'dropdownedit',
+    // editType: 'dropdownedit',
     textAlign: 'Center',
   },
   { field: 'phoneNumber',
@@ -898,9 +898,7 @@ export const ordersGrid = [
   {
     field: 'address.street',
     headerText: 'Street',
-    format: 'C2',
     textAlign: 'Center',
-    editType: 'numericedit',
     width: '150',
   },
   {
