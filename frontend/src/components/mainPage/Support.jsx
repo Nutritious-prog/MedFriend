@@ -2,7 +2,7 @@ import React from 'react';
 
 import { FaPhoneAlt, FaUsers, FaHeadset, FaGlobeAmericas} from "react-icons/fa";
 
-import supportImg from '../assets/support.jpg'
+import supportImg from '../../assets/support.jpg'
 
 const Support = () => {
   return (

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 function Login() {
   const navigate = useNavigate();
   const goToRegister = () => navigate("/signUp");
+  const goToDashboard = () => navigate("/dashboard/home");
 
   return (
     <>
@@ -22,7 +23,7 @@ function Login() {
                   <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
                 </svg>
               </div>
-              <button className="bg-blue-700 rounded-xl text-white py-2 hover:scale-105 duration-300">Login</button>
+              <button className="bg-blue-700 rounded-xl text-white py-2 hover:scale-105 duration-300" onClick={goToDashboard}>Login</button>
             </form>
 
             <div className="mt-6 grid grid-cols-3 items-center text-gray-400">

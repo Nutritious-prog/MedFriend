@@ -2,7 +2,7 @@ import React from 'react'
 
 import { FaAddressBook, FaCalendarAlt, FaMoneyBillAlt} from "react-icons/fa";
 
-import bgImg from '../assets/time-management.png'
+import bgImg from '../../assets/time-management.png'
 
 const Home = () => {
   return (
