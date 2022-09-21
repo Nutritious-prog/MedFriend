@@ -6,6 +6,7 @@ import MainPage from './pages/MainPage';
 import SignUp from './components/logins/SignUp';
 import Patients from './components/dashboard/Patients';
 import AddPatient from './components/dashboard/AddPatient';
+import UpdatePatient from './components/dashboard/UpdatePatient';
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <Route path='/dashboard/staff' element={<Dashboard/>}></Route>
         <Route path='/dashboard/patients' element={<Patients/>}></Route>
         <Route path='/dashboard/patients/add' element={<AddPatient/>}></Route>
+        <Route path='/dashboard/patients/update/:id' element={<UpdatePatient/>}></Route>
         <Route path='/dashboard/options' element={<Dashboard/>}></Route>
       </Routes>
     </BrowserRouter>

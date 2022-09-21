@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import PatientService from "../../services/PatientService";
 import { useStateContext } from "../../contexts/ContextProvider";
 
@@ -9,17 +9,17 @@ import Sidebar from "./Sidebar";
 import { FiSettings } from "react-icons/fi";
 import { TooltipComponent } from "@syncfusion/ej2-react-popups";
 
-function AddPatient() {
+function UpdatePatient() {
   const { activeMenu } = useStateContext();
 
+  const { id } = useParams();
+  const navigate = useNavigate();
   const [patient, setPatient] = useState({
-    id: "",
+    id: id,
     name: "",
     phoneNumber: "",
     address: { street: "", city: "", postalCode: "" },
   });
-
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -37,30 +37,28 @@ function AddPatient() {
     setPatient({ ...patient, address: patAddress });
   };
 
-  const savePatient = (e) => {
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await PatientService.getPatientById(patient.id);
+        setPatient(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const updatePatient = (e) => {
     e.preventDefault();
-    PatientService.savePatient(patient)
+    console.log(patient);
+    PatientService.updatePatient(patient, id)
       .then((response) => {
-        console.log(response);
         navigate("/dashboard/patients");
       })
       .catch((error) => {
         console.log(error);
       });
-  };
-
-  const reset = (e) => {
-    e.preventDefault();
-    setPatient({
-      id: "",
-      name: "",
-      phoneNumber: "",
-      address: {
-        street: "",
-        city: "",
-        postalCode: "",
-      },
-    });
   };
 
   return (
@@ -101,7 +99,7 @@ function AddPatient() {
             <div className="flex max-w-2xl mx-auto shadow border-b">
               <div className="px-8 py-8">
                 <div className="font-thin text-2xl tracking-wider">
-                  <h1>Add New Patient</h1>
+                  <h1>Update Patient</h1>
                 </div>
                 <div className="items-center justify-center h-14 w-full my-4">
                   <label className="block text-gray-600 text-sm font-normal">
@@ -134,11 +132,12 @@ function AddPatient() {
                   <input
                     type="text"
                     name="street"
-                    value={patient.street}
+                    value={patient.address.street}
                     onChange={(e) => handleAddresChange(e)}
                     className="h-10 w-96 border mt-2 px-2 py-2 shadow"
                   ></input>
                 </div>
+
                 <div className="items-center justify-center h-14 w-full my-4">
                   <label className="block text-gray-600 text-sm font-normal">
                     City
@@ -146,11 +145,12 @@ function AddPatient() {
                   <input
                     type="text"
                     name="city"
-                    value={patient.city}
+                    value={patient.address.city}
                     onChange={(e) => handleAddresChange(e)}
                     className="h-10 w-96 border mt-2 px-2 py-2 shadow"
                   ></input>
                 </div>
+
                 <div className="items-center justify-center h-14 w-full my-4">
                   <label className="block text-gray-600 text-sm font-normal">
                     Postal Code
@@ -158,7 +158,7 @@ function AddPatient() {
                   <input
                     type="text"
                     name="postalCode"
-                    value={patient.postalCode}
+                    value={patient.address.postalCode}
                     onChange={(e) => handleAddresChange(e)}
                     className="h-10 w-96 border mt-2 px-2 py-2 shadow"
                   ></input>
@@ -166,16 +166,16 @@ function AddPatient() {
 
                 <div className="items-center justify-center h-14 w-full my-4 space-x-4 pt-4">
                   <button
-                    onClick={savePatient}
+                    onClick={updatePatient}
                     className="rounded text-white font-semibold bg-blue-700 hover:bg-white hover:text-blue-700 py-2 px-6"
-                  >
-                    Save
+                    >
+                    Update
                   </button>
                   <button
-                    onClick={reset}
+                    onClick={() => navigate("/dashboard/patients")}
                     className="rounded text-black font-semibold bg-white hover:bg-blue-200 py-2 px-6"
-                  >
-                    Clear
+                 >
+                    Cancel
                   </button>
                 </div>
               </div>
@@ -187,4 +187,4 @@ function AddPatient() {
   );
 }
 
-export default AddPatient;
+export default UpdatePatient;

@@ -5,7 +5,7 @@ const Patient = ({ patient, deletePatient }) => {
   const navigate = useNavigate();
   const editPatient = (e, id) => {
     e.preventDefault();
-    navigate(`/editPatient/${id}`);
+    navigate(`/dashboard/patients/update/${id}`);
   };
 
   return (
