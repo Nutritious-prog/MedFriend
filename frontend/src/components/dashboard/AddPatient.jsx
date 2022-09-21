@@ -17,13 +17,7 @@ function AddPatient() {
     id: "",
     name: "",
     phoneNumber: "",
-    address: {},
-  });
-
-  const [patientAddress, setPatientAddress] = useState({
-    street: "",
-    city: "",
-    postalCode: "",
+    address: { street: "", city: "", postalCode: "" },
   });
 
   const navigate = useNavigate();
@@ -35,14 +29,17 @@ function AddPatient() {
 
   const handleAddresChange = (e) => {
     const value = e.target.value;
-    setPatientAddress({ ...patientAddress, [e.target.name]: value });
-    assignAddressToPatient();
-  };
 
-  const assignAddressToPatient = () => {
-    const combined = { ...patientAddress, ...patient }
-    setPatient({...patient, combined});
+    const patAddress =  {
+      ...patient.address,
+      [e.target.name]: value
   }
+
+    console.log(patAddress);
+
+    setPatient({...patient, address: patAddress})
+
+  };
 
   const savePatient = (e) => {
     e.preventDefault();
@@ -141,7 +138,7 @@ function AddPatient() {
                   <input
                     type="text"
                     name="street"
-                    value={patientAddress.street}
+                    value={patient.street}
                     onChange={(e) => handleAddresChange(e)}
                     className="h-10 w-96 border mt-2 px-2 py-2 shadow"
                   ></input>
@@ -153,7 +150,7 @@ function AddPatient() {
                   <input
                     type="text"
                     name="city"
-                    value={patientAddress.city}
+                    value={patient.city}
                     onChange={(e) => handleAddresChange(e)}
                     className="h-10 w-96 border mt-2 px-2 py-2 shadow"
                   ></input>
@@ -165,7 +162,7 @@ function AddPatient() {
                   <input
                     type="text"
                     name="postalCode"
-                    value={patientAddress.postalCode}
+                    value={patient.postalCode}
                     onChange={(e) => handleAddresChange(e)}
                     className="h-10 w-96 border mt-2 px-2 py-2 shadow"
                   ></input>
