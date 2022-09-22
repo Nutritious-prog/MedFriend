@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import PatientService from "../../services/PatientService";
-import { useStateContext } from "../../contexts/ContextProvider";
+import PatientService from "../../../services/PatientService";
+import { useStateContext } from "../../../contexts/ContextProvider";
 
-import Navbar from "./Navbar";
-import Sidebar from "./Sidebar";
+import Navbar from "../Navbar";
+import Sidebar from "../Sidebar";
 
 import { FiSettings } from "react-icons/fi";
 import { TooltipComponent } from "@syncfusion/ej2-react-popups";

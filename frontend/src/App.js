@@ -4,9 +4,12 @@ import Dashboard from './pages/Dashboard';
 import Login from './components/logins/Login';
 import MainPage from './pages/MainPage';
 import SignUp from './components/logins/SignUp';
-import Patients from './components/dashboard/Patients';
-import AddPatient from './components/dashboard/AddPatient';
-import UpdatePatient from './components/dashboard/UpdatePatient';
+import Patients from './components/dashboard//PatientsTab/Patients';
+import AddPatient from './components/dashboard/PatientsTab/AddPatient';
+import UpdatePatient from './components/dashboard/PatientsTab/UpdatePatient';
+import TreatmentsList from './components/dashboard/TreatmentsTab/TreatmentsList';
+import AddTreatment from './components/dashboard/TreatmentsTab/AddTreatment';
+import UpdateTreatment from './components/dashboard/TreatmentsTab/UpdateTreatment';
 
 
 function App() {
@@ -24,6 +27,9 @@ function App() {
         <Route path='/dashboard/patients' element={<Patients/>}></Route>
         <Route path='/dashboard/patients/add' element={<AddPatient/>}></Route>
         <Route path='/dashboard/patients/update/:id' element={<UpdatePatient/>}></Route>
+        <Route path='/dashboard/treatments' element={<TreatmentsList/>}></Route>
+        <Route path='/dashboard/treatments/add' element={<AddTreatment/>}></Route>
+        <Route path='/dashboard/treatments/update/:id' element={<UpdateTreatment/>}></Route>
         <Route path='/dashboard/options' element={<Dashboard/>}></Route>
       </Routes>
     </BrowserRouter>

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Sidebar from "./Sidebar";
-import { useStateContext } from "../../contexts/ContextProvider";
+import Sidebar from "../Sidebar";
+import { useStateContext } from "../../../contexts/ContextProvider";
 import Patient from "./Patient";
-import Navbar from "./Navbar";
+import Navbar from "../Navbar";
 
-import PatientService from "../../services/PatientService";
+import PatientService from "../../../services/PatientService";
 
 import { FiSettings } from "react-icons/fi";
 import { TooltipComponent } from "@syncfusion/ej2-react-popups";
@@ -88,24 +88,27 @@ function Patients() {
       </div>
       <div className="flex shadow border-b mt-3">
         <table className="min-w-full">
-          <thead className="bg-gray-50">
+          <thead className="bg-blue-700">
             <tr>
-              <th className="text-left font-medium text-gray-500 uppercase tracking-wider py-3 px-6">
+              <th className="text-left font-medium text-gray-200 uppercase tracking-wider py-3 px-6">
+                
+              </th>
+              <th className="text-left font-medium text-gray-200 uppercase tracking-wider py-3 px-6">
                 Full Name
               </th>
-              <th className="text-left font-medium text-gray-500 uppercase tracking-wider py-3 px-6">
+              <th className="text-left font-medium text-gray-200 uppercase tracking-wider py-3 px-6">
                 Phone Number
               </th>
-              <th className="text-left font-medium text-gray-500 uppercase tracking-wider py-3 px-6">
+              <th className="text-left font-medium text-gray-200 uppercase tracking-wider py-3 px-6">
                 Street
               </th>
-              <th className="text-left font-medium text-gray-500 uppercase tracking-wider py-3 px-6">
+              <th className="text-left font-medium text-gray-200 uppercase tracking-wider py-3 px-6">
                 City
               </th>
-              <th className="text-left font-medium text-gray-500 uppercase tracking-wider py-3 px-6">
+              <th className="text-left font-medium text-gray-200 uppercase tracking-wider py-3 px-6">
                 Postal Code
               </th>
-              <th className="text-right font-medium text-gray-500 uppercase tracking-wider py-3 px-6">
+              <th className="text-right font-medium text-gray-200 uppercase tracking-wider py-3 px-6">
                 Actions
               </th>
             </tr>
