@@ -10,6 +10,7 @@ import UpdatePatient from './components/dashboard/PatientsTab/UpdatePatient';
 import TreatmentsList from './components/dashboard/TreatmentsTab/TreatmentsList';
 import AddTreatment from './components/dashboard/TreatmentsTab/AddTreatment';
 import UpdateTreatment from './components/dashboard/TreatmentsTab/UpdateTreatment';
+import Calendar from './components/dashboard/CalendarTab/Calendar';
 
 
 function App() {
@@ -22,7 +23,7 @@ function App() {
         <Route path='/login' element={<Login/>}></Route>
         <Route path='/signUp' element={<SignUp/>}></Route>
         <Route path='/dashboard/home' element={<Dashboard/>}></Route>
-        <Route path='/dashboard/schedule' element={<Dashboard/>}></Route>
+        <Route path='/dashboard/calendar' element={<Calendar/>}></Route>
         <Route path='/dashboard/staff' element={<Dashboard/>}></Route>
         <Route path='/dashboard/patients' element={<Patients/>}></Route>
         <Route path='/dashboard/patients/add' element={<AddPatient/>}></Route>
