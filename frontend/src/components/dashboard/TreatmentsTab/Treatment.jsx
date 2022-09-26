@@ -9,7 +9,7 @@ function Treatment({ treatment, deleteTreatment }) {
   };
 
   return (
-    <div className='md:w-[65%] w-[90%] flex ml-3'>
+    <div className='md:w-[45%] w-[90%] flex ml-3'>
     <div className='py-1 w-[45%] border-b border-blue-700 flex text-2xl justify-between mb-4 p-2 bg-white mt-3'>
       <div>
         <p className='text-left'>{treatment.name}</p>

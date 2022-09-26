@@ -5,15 +5,18 @@ import Multiselect from "multiselect-react-dropdown";
 
 import TreatmentService from "../../../services/TreatmentService";
 import PatientService from "../../../services/PatientService";
+import DoctorService from "../../../services/DoctorService";
 
 function AddAppointmentModal({ isOpen, onClose, onEventAdded }) {
   const [treatmentsArr, setTreatments] = useState([]);
   const [patientsArr, setPatients] = useState([]);
+  const [doctorsArr, setDoctros] = useState([]);
 
   const [loading, setLoading] = useState(true);
   const [appointment, setAppointment] = useState({
     id: "",
     patient: {},
+    doctor: {},
     treatments: [],
     date: new Date(),
   });
@@ -29,6 +32,13 @@ function AddAppointmentModal({ isOpen, onClose, onEventAdded }) {
           const response = await PatientService.getPatients();
           console.log(response.data);
           setPatients(response.data);
+          try {
+            const response = await DoctorService.getDoctors();
+            console.log(response.data);
+            setDoctros(response.data);
+          } catch (error) {
+            console.log(error);
+          }
         } catch (error) {
           console.log(error);
         }
@@ -49,24 +59,27 @@ function AddAppointmentModal({ isOpen, onClose, onEventAdded }) {
   const saveAppointment = (e) => {
     e.preventDefault();
 
+    console.log(appointment);
+
     onClose();
   };
 
-  const findSeletedElementInDropdown = async (e) => {
+  const findSeletedElementInPatientsDropdown = async (e) => {
     try {
       const response = await PatientService.getPatientById(e.target.value);
       console.log(response.data);
-      const tempPatient = {
-        id: response.data.id,
-        name: response.data.name,
-        phoneNumber: response.data.phoneNumber,
-        address: {
-          street: response.data.address.street,
-          city: "",
-          postalCode: "",
-        },
-      };
-      setAppointment({ ...appointment, patient: tempPatient });
+      setAppointment({ ...appointment, patient: response.data });
+    } catch (error) {
+      console.log(error);
+    }
+    console.log(appointment);
+  };
+
+  const findSeletedElementInDoctorsDropdown = async (e) => {
+    try {
+      const response = await DoctorService.getDoctorById(e.target.value);
+      console.log(response.data);
+      setAppointment({ ...appointment, doctor: response.data });
     } catch (error) {
       console.log(error);
     }
@@ -90,15 +103,24 @@ function AddAppointmentModal({ isOpen, onClose, onEventAdded }) {
   };
 
   const onRemove = async (selectedList, removedItem) => {
+    let leftTreatments = [];
+    for (let i = 0; i < selectedList.length; i++) {
+      if (selectedList[i].cat !== removedItem.cat) {
+        try {
+          const response = await TreatmentService.getTreatmentById(
+            selectedList[i].cat
+          );
+          console.log(response.data);
+          leftTreatments.push(response.data);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    }
     setAppointment({
       ...appointment,
-      treatments: [
-        appointment.treatments.filter(
-          (treatment) => treatment.id !== removedItem.cat
-        ),
-      ],
+      treatments: leftTreatments,
     });
-    console.log(appointment);
   };
 
   return (
@@ -137,12 +159,27 @@ function AddAppointmentModal({ isOpen, onClose, onEventAdded }) {
               <div className="flex flex-col">
                 <label for="patients">Choose a patient:</label>
                 <select
-                  id="patients"
-                  name="patients" 
-                  onChange={(e) => findSeletedElementInDropdown(e)}
+                  id="patient"
+                  name="patient"
+                  onChange={(e) => findSeletedElementInPatientsDropdown(e)}
                 >
+                  <option>Select...</option>
                   {patientsArr.map((patient) => (
                     <option value={patient.id}>{patient.name}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="flex flex-col">
+                <label for="doctors">Choose a doctor:</label>
+                <select
+                  id="doctor"
+                  name="doctor"
+                  onChange={(e) => findSeletedElementInDoctorsDropdown(e)}
+                >
+                  <option>Select...</option>
+                  {doctorsArr.map((doctor) => (
+                    <option value={doctor.id}>Dr. {doctor.name}</option>
                   ))}
                 </select>
               </div>
@@ -168,7 +205,7 @@ function AddAppointmentModal({ isOpen, onClose, onEventAdded }) {
               <button
                 className="bg-emerald-500 border-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none hover:border-blue-700 focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                 type="button"
-                onClick={() => saveAppointment()}
+                onClick={(e) => saveAppointment(e)}
               >
                 Save Changes
               </button>

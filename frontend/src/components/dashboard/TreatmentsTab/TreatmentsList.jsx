@@ -89,6 +89,7 @@ function TreatmentsList() {
                   Add Treatment
                 </button>
               </div>
+              <div className="flex flex-wrap">
               {treatments.map((treatment) => (
                 <Treatment
                   treatment={treatment}
@@ -96,6 +97,7 @@ function TreatmentsList() {
                   key={treatment.id}
                 ></Treatment>
               ))}
+              </div>
             </div>
           </div>
         </div>
