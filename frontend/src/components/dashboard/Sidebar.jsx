@@ -17,15 +17,15 @@ const Sidebar = () => {
       }
     };
     const activeLink = 'flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg  text-white  text-md m-2';
-    const normalLink = 'flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg  text-md text-gray-700 dark:text-gray-600 dark:hover:text-black hover:bg-blue-100 m-2';
+    const normalLink = 'flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg  text-md text-gray-100 dark:text-gray-100 dark:hover:text-black hover:bg-blue-100 m-2';
 
   return (
-    <div className="ml-3 h-screen md:overflow-hidden overflow-auto md:hover:overflow-auto pb-10">
+    <div className="pl-3 h-screen md:overflow-hidden overflow-auto md:hover:overflow-auto pb-10 bg-slate-600">
     {activeMenu && (
       <>
         <div className="flex justify-between items-center">
           <Link to="/" onClick={handleCloseSideBar} className="items-center gap-3 ml-3 mt-4 flex text-xl font-extrabold tracking-tight dark:text-white text-slate-900">
-            <span className='text-3xl text-black font-thin'>MEDFRIEND.</span>
+            <span className='text-3xl text-white font-thin'>MEDFRIEND.</span>
           </Link>
           <TooltipComponent content="Menu" position="BottomCenter">
             <button
@@ -41,7 +41,7 @@ const Sidebar = () => {
         <div className="mt-10 ">
           {links.map((item) => (
             <div key={item.title}>
-              <p className="text-gray-400 dark:text-gray-400 m-3 mt-4 uppercase">
+              <p className="text-white dark:text-white m-3 mt-4 uppercase">
                 {item.title}
               </p>
               {item.links.map((link) => (

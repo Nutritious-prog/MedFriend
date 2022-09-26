@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import TreatmentService from "../../../services/TreatmentService";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import DoctorService from "../../../services/DoctorService";
 import { useStateContext } from "../../../contexts/ContextProvider";
 
 import Navbar from "../Navbar";
@@ -9,44 +9,45 @@ import Sidebar from "../Sidebar";
 import { FiSettings } from "react-icons/fi";
 import { TooltipComponent } from "@syncfusion/ej2-react-popups";
 
-function UpdateTreatment() {
+function AddDoctor() {
   const { activeMenu } = useStateContext();
 
-  const { id } = useParams();
-  const navigate = useNavigate();
-  const [treatment, setTreatment] = useState({
-    id: id,
+  const [doctor, setDoctor] = useState({
+    id: "",
     name: "",
-    price: "",
+    role: "",
+    specialization: "",
+    phoneNumber: ""
   });
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const value = e.target.value;
-    setTreatment({ ...treatment, [e.target.name]: value });
+    setDoctor({ ...doctor, [e.target.name]: value });
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await TreatmentService.getTreatmentById(treatment.id);
-        setTreatment(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchData();
-  }, []);
-
-  const updateTreatment = (e) => {
+  const savePatient = (e) => {
     e.preventDefault();
-    console.log(treatment);
-    TreatmentService.updateTreatment(treatment, id)
+    DoctorService.saveDoctor(doctor)
       .then((response) => {
-        navigate("/dashboard/treatments");
+        console.log(response);
+        navigate("/dashboard/doctors");
       })
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  const reset = (e) => {
+    e.preventDefault();
+    setDoctor({
+      id: "",
+      name: "",
+      role: "",
+      specialization: "",
+      phoneNumber: ""
+    });
   };
 
   return (
@@ -84,31 +85,55 @@ function UpdateTreatment() {
         <div className="fixed md:static bg-main-bg dark:bg-main-dark-bg navbar w-full ">
           <Navbar />
 
-          <div className="flex max-w-2xl mx-auto shadow border-b">
+          <div className="flex w-[30%] mx-auto shadow border border-blue-700">
             <div className="px-8 py-8">
               <div className="font-thin text-2xl tracking-wider">
-                <h1>Update Treatment</h1>
+                <h1>Add New Doctor</h1>
               </div>
               <div className="items-center justify-center h-14 w-full my-4">
                 <label className="block text-gray-600 text-sm font-normal">
-                  Name of treatment
+                  Full Name
                 </label>
                 <input
                   type="text"
                   name="name"
-                  value={treatment.name}
+                  value={doctor.name}
                   onChange={(e) => handleChange(e)}
                   className="h-10 w-96 border mt-2 px-2 py-2 shadow"
                 ></input>
               </div>
               <div className="items-center justify-center h-14 w-full my-4">
                 <label className="block text-gray-600 text-sm font-normal">
-                  Price
+                  Phone Number
                 </label>
                 <input
-                  type="number"
-                  name="price"
-                  value={treatment.price}
+                  type="text"
+                  name="phoneNumber"
+                  value={doctor.phoneNumber}
+                  onChange={(e) => handleChange(e)}
+                  className="h-10 w-96 border mt-2 px-2 py-2 shadow"
+                ></input>
+              </div>
+              <div className="items-center justify-center h-14 w-full my-4">
+                <label className="block text-gray-600 text-sm font-normal">
+                  Role
+                </label>
+                <input
+                  type="text"
+                  name="role"
+                  value={doctor.role}
+                  onChange={(e) => handleChange(e)}
+                  className="h-10 w-96 border mt-2 px-2 py-2 shadow"
+                ></input>
+              </div>
+              <div className="items-center justify-center h-14 w-full my-4">
+                <label className="block text-gray-600 text-sm font-normal">
+                  Specialization
+                </label>
+                <input
+                  type="text"
+                  name="specialization"
+                  value={doctor.specialization}
                   onChange={(e) => handleChange(e)}
                   className="h-10 w-96 border mt-2 px-2 py-2 shadow"
                 ></input>
@@ -116,16 +141,16 @@ function UpdateTreatment() {
 
               <div className="items-center justify-center h-14 w-full my-4 space-x-4 pt-4">
                 <button
-                  onClick={updateTreatment}
+                  onClick={savePatient}
                   className="rounded text-white font-semibold bg-blue-700 hover:bg-white hover:text-blue-700 py-2 px-6"
                 >
                   Save
                 </button>
                 <button
-                  onClick={() => navigate("/dashboard/patients")}
+                  onClick={reset}
                   className="rounded text-black font-semibold bg-white hover:bg-blue-200 py-2 px-6"
                 >
-                  Cancel
+                  Clear
                 </button>
               </div>
             </div>
@@ -137,4 +162,4 @@ function UpdateTreatment() {
   )
 }
 
-export default UpdateTreatment
+export default AddDoctor

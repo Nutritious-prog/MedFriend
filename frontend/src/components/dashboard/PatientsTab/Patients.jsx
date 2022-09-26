@@ -10,10 +10,16 @@ import PatientService from "../../../services/PatientService";
 import { FiSettings } from "react-icons/fi";
 import { TooltipComponent } from "@syncfusion/ej2-react-popups";
 
+import { FaPlus } from "react-icons/fa";
+
 function Patients() {
   const navigate = useNavigate();
   const { activeMenu } = useStateContext();
-  const editing = { allowDeleting: true, allowEditing: true , allowAdding: true};
+  const editing = {
+    allowDeleting: true,
+    allowEditing: true,
+    allowAdding: true,
+  };
 
   const [loading, setLoading] = useState(true);
   const [patients, setPatients] = useState(null);
@@ -47,7 +53,7 @@ function Patients() {
     <div>
       <div className="flex relative dark:bg-main-dark-bg">
         <div className="fixed right-4 bottom-4" style={{ zIndex: "1000" }}>
-          <TooltipComponent content="Settings" >
+          <TooltipComponent content="Settings">
             <button
               type="button"
               style={{ background: "blue", borderRadius: "50%" }}
@@ -79,53 +85,54 @@ function Patients() {
             <Navbar />
 
             <div className="container mx-auto my-8">
-      <div className="h-12">
-        <button
-          onClick={() => navigate("/dashboard/patients/add")}
-          className="rounded bg-blue-700 text-white px-6 py-2 font-semibold">
-          Add Patient
-        </button>
-      </div>
-      <div className="flex shadow border-b mt-3">
-        <table className="min-w-full">
-          <thead className="bg-blue-700">
-            <tr>
-              <th className="text-left font-medium text-gray-200 uppercase tracking-wider py-3 px-6">
-                
-              </th>
-              <th className="text-left font-medium text-gray-200 uppercase tracking-wider py-3 px-6">
-                Full Name
-              </th>
-              <th className="text-left font-medium text-gray-200 uppercase tracking-wider py-3 px-6">
-                Phone Number
-              </th>
-              <th className="text-left font-medium text-gray-200 uppercase tracking-wider py-3 px-6">
-                Street
-              </th>
-              <th className="text-left font-medium text-gray-200 uppercase tracking-wider py-3 px-6">
-                City
-              </th>
-              <th className="text-left font-medium text-gray-200 uppercase tracking-wider py-3 px-6">
-                Postal Code
-              </th>
-              <th className="text-right font-medium text-gray-200 uppercase tracking-wider py-3 px-6">
-                Actions
-              </th>
-            </tr>
-          </thead>
-          {!loading && (
-            <tbody className="bg-white">
-              {patients.map((patient) => (
-                <Patient
-                  patient={patient}
-                  deletePatient={deletePatient}
-                  key={patient.id}></Patient>
-              ))}
-            </tbody>
-          )}
-        </table>
-      </div>
-    </div>
+              <div className="h-12">
+                <button
+                  onClick={() => navigate("/dashboard/patients/add")}
+                  className="rounded bg-blue-700 text-white px-6 py-2 font-semibold flex"
+                >
+                  <FaPlus className="mt-auto mb-auto mr-2 h-[15px]" />
+                  Add Patient
+                </button>
+              </div>
+              <div className="flex shadow border-b mt-3">
+                <table className="min-w-full">
+                  <thead className="bg-blue-700">
+                    <tr>
+                      <th className="text-left font-medium text-gray-200 uppercase tracking-wider py-3 px-6"></th>
+                      <th className="text-left font-medium text-gray-200 uppercase tracking-wider py-3 px-6">
+                        Full Name
+                      </th>
+                      <th className="text-left font-medium text-gray-200 uppercase tracking-wider py-3 px-6">
+                        Phone Number
+                      </th>
+                      <th className="text-left font-medium text-gray-200 uppercase tracking-wider py-3 px-6">
+                        Street
+                      </th>
+                      <th className="text-left font-medium text-gray-200 uppercase tracking-wider py-3 px-6">
+                        City
+                      </th>
+                      <th className="text-left font-medium text-gray-200 uppercase tracking-wider py-3 px-6">
+                        Postal Code
+                      </th>
+                      <th className="text-right font-medium text-gray-200 uppercase tracking-wider py-3 px-6">
+                        Actions
+                      </th>
+                    </tr>
+                  </thead>
+                  {!loading && (
+                    <tbody className="bg-white">
+                      {patients.map((patient) => (
+                        <Patient
+                          patient={patient}
+                          deletePatient={deletePatient}
+                          key={patient.id}
+                        ></Patient>
+                      ))}
+                    </tbody>
+                  )}
+                </table>
+              </div>
+            </div>
           </div>
         </div>
       </div>

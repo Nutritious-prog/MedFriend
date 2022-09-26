@@ -2,29 +2,30 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../Sidebar";
 import { useStateContext } from "../../../contexts/ContextProvider";
-import Treatment from "./Treatment";
+import DoctorCard from "./DoctorCard";
 import Navbar from "../Navbar";
+
+import DoctorService from "../../../services/DoctorService";
 
 import { FiSettings } from "react-icons/fi";
 import { TooltipComponent } from "@syncfusion/ej2-react-popups";
-import TreatmentService from "../../../services/TreatmentService";
 
 import { FaPlus } from "react-icons/fa";
 
-function TreatmentsList() {
+function DoctorsList() {
   const navigate = useNavigate();
   const { activeMenu } = useStateContext();
 
   const [loading, setLoading] = useState(true);
-  const [treatments, setTreatments] = useState([]);
+  const [doctors, setDoctors] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await TreatmentService.getTreatments();
+        const response = await DoctorService.getDoctors();
         console.log(response.data);
-        setTreatments(response.data);
+        setDoctors(response.data);
       } catch (error) {
         console.log(error);
       }
@@ -33,17 +34,16 @@ function TreatmentsList() {
     fetchData();
   }, []);
 
-  const deleteTreatment = (e, id) => {
+  const deleteDoctor = (e, id) => {
     e.preventDefault();
-    TreatmentService.deleteTreatment(id).then((res) => {
-      if (treatments) {
-        setTreatments((prevElement) => {
-          return prevElement.filter((treatment) => treatment.id !== id);
+    DoctorService.deleteDoctor(id).then((res) => {
+      if (doctors) {
+        setDoctors((prevElement) => {
+          return prevElement.filter((doctor) => doctor.id !== id);
         });
       }
     });
   };
-
   return (
     <div>
       <div className="flex relative dark:bg-main-dark-bg">
@@ -82,20 +82,25 @@ function TreatmentsList() {
             <div className="container mx-auto my-8">
               <div className="h-12">
                 <button
-                  onClick={() => navigate("/dashboard/treatments/add")}
-                  className="rounded ml-3 bg-blue-700 text-white px-6 py-2 font-semibold flex"
+                  onClick={() => navigate("/dashboard/doctors/add")}
+                  className="rounded bg-blue-700 text-white px-6 py-2 font-semibold flex"
                 >
-                  <FaPlus className="mt-auto mb-auto mr-2 h-[15px]" />
-                  Add Treatment
+                  <FaPlus className="mt-auto mb-auto mr-2 h-[15px]"/>Add Doctor
                 </button>
               </div>
-              {treatments.map((treatment) => (
-                <Treatment
-                  treatment={treatment}
-                  deleteTreatment={deleteTreatment}
-                  key={treatment.id}
-                ></Treatment>
-              ))}
+              <div className="mt-3">
+                {!loading && (
+                  <div className="bg-white flex flex-wrap">
+                    {doctors.map((doctor) => (
+                      <DoctorCard
+                        doctor={doctor}
+                        deleteDoctor={deleteDoctor}
+                        key={doctor.id}
+                      ></DoctorCard>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -104,4 +109,4 @@ function TreatmentsList() {
   );
 }
 
-export default TreatmentsList;
+export default DoctorsList;

@@ -2,6 +2,8 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Avatar } from "antd";
 
+import { FaPen, FaMinus } from "react-icons/fa";
+
 const Patient = ({ patient, deletePatient }) => {
   const navigate = useNavigate();
   const editPatient = (e, id) => {
