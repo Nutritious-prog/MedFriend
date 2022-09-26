@@ -3,10 +3,7 @@ package com.nutritiousprog.medfriend.unit.sercives;
 import com.nutritiousprog.medfriend.exceptions.InvalidArgumentException;
 import com.nutritiousprog.medfriend.exceptions.ObjectAlreadyExistsException;
 import com.nutritiousprog.medfriend.exceptions.ObjectNotFoundException;
-import com.nutritiousprog.medfriend.model.Address;
-import com.nutritiousprog.medfriend.model.Appointment;
-import com.nutritiousprog.medfriend.model.Patient;
-import com.nutritiousprog.medfriend.model.Treatment;
+import com.nutritiousprog.medfriend.model.*;
 import com.nutritiousprog.medfriend.repositories.AddressRepository;
 import com.nutritiousprog.medfriend.repositories.AppointmentRepository;
 import com.nutritiousprog.medfriend.repositories.PatientRepository;
@@ -67,11 +64,12 @@ public class AppointmentServiceTest {
         //given
         Address address = new Address("Long 14c", "London", "12-345");
         Patient p = new Patient("Jan Kowalski", address, "123456789");
+        Doctor d = new Doctor("Doc Doctorsky", "Doctor", "Cardio surgeon", "123123123");
         Treatment t = new Treatment("Back rub", 150.00);
         Treatment t2= new Treatment("Joints loosening", 150.00);
         List<Treatment> treatments = Arrays.asList(t, t2);
 
-        Appointment appointment = new Appointment(p, treatments, LocalDateTime.of(2022, 9, 15, 13, 40));
+        Appointment appointment = new Appointment(p, d, treatments, LocalDateTime.of(2022, 9, 15, 13, 40));
 
         //when
         underTest.create(appointment);
@@ -107,11 +105,12 @@ public class AppointmentServiceTest {
         //given
         Address address = new Address("Long 14c", "London", "12-345");
         Patient p = new Patient("Jan Kowalski", address, "123456789");
+        Doctor d = new Doctor("Doc Doctorsky", "Doctor", "Cardio surgeon", "123123123");
         Treatment t = new Treatment("Back rub", 150.00);
         Treatment t2= new Treatment("Joints loosening", 150.00);
         List<Treatment> treatments = Arrays.asList(t, t2);
 
-        Appointment appointment = new Appointment(p, treatments, LocalDateTime.of(2022, 9, 15, 13, 40));
+        Appointment appointment = new Appointment(p, d, treatments, LocalDateTime.of(2022, 9, 15, 13, 40));
 
         List<Appointment> appointments = new ArrayList<>();
         appointments.add(appointment);
@@ -132,11 +131,12 @@ public class AppointmentServiceTest {
     void createAppointmentWithInvalidPatient(){
         //given
         Patient p = null;
+        Doctor d = new Doctor("Doc Doctorsky", "Doctor", "Cardio surgeon", "123123123");
         Treatment t = new Treatment("Back rub", 150.00);
         Treatment t2= new Treatment("Joints loosening", 150.00);
         List<Treatment> treatments = Arrays.asList(t, t2);
 
-        Appointment appointment = new Appointment(p, treatments, LocalDateTime.of(2022, 9, 15, 13, 40));
+        Appointment appointment = new Appointment(p, d, treatments, LocalDateTime.of(2022, 9, 15, 13, 40));
 
         //when
         assertThatThrownBy(
@@ -153,8 +153,9 @@ public class AppointmentServiceTest {
         //given
         Address address = new Address("Long 14c", "London", "12-345");
         Patient p = new Patient("Jan Kowalski", address, "123456789");
+        Doctor d = new Doctor("Doc Doctorsky", "Doctor", "Cardio surgeon", "123123123");
 
-        Appointment appointment = new Appointment(p, null, LocalDateTime.of(2022, 9, 15, 13, 40));
+        Appointment appointment = new Appointment(p, d, null, LocalDateTime.of(2022, 9, 15, 13, 40));
 
         //when
         assertThatThrownBy(
@@ -171,11 +172,12 @@ public class AppointmentServiceTest {
         //given
         Address address = new Address("Long 14c", "London", "12-345");
         Patient p = new Patient("Jan Kowalski", address, "123456789");
+        Doctor d = new Doctor("Doc Doctorsky", "Doctor", "Cardio surgeon", "123123123");
         Treatment t = new Treatment("Back rub", 150.00);
         Treatment t2= new Treatment("Joints loosening", 150.00);
         List<Treatment> treatments = Arrays.asList(t, t2);
 
-        Appointment appointment = new Appointment(p, treatments, null);
+        Appointment appointment = new Appointment(p, d, treatments, null);
 
         //when
         assertThatThrownBy(
@@ -239,22 +241,24 @@ public class AppointmentServiceTest {
         long id = 10;
         Address address = new Address("Long 14c", "London", "12-345");
         Patient p = new Patient("Jan Kowalski", address, "123456789");
+        Doctor d = new Doctor("Doc Doctorsky", "Doctor", "Cardio surgeon", "123123123");
         Treatment t = new Treatment("Back rub", 150.00);
         Treatment t2= new Treatment("Joints loosening", 250.00);
         List<Treatment> treatments = Arrays.asList(t, t2);
 
-        Appointment appointment = new Appointment(p, treatments, LocalDateTime.of(2022, 9, 15, 13, 40));
+        Appointment appointment = new Appointment(p, d, treatments, LocalDateTime.of(2022, 9, 15, 13, 40));
 
         given(appointmentRepository.findById(id)).willReturn(Optional.of(appointment));
         given(appointmentRepository.existsById(id)).willReturn(true);
 
         Address address2 = new Address("Short 8a", "Birmingham", "98-765");
         Patient p2 = new Patient("Adam Nowak", address2, "987654321");
+        Doctor d2 = new Doctor("Mag Surgeonsky", "Surgeon", "Child surgeon", "123123123");
         Treatment t3 = new Treatment("Allergy tests", 350.00);
         Treatment t4= new Treatment("Stress Therapy", 450.00);
         List<Treatment> treatments2 = Arrays.asList(t3, t4);
 
-        Appointment appointment2 = new Appointment(p2, treatments2, LocalDateTime.of(2022, 9, 16, 18, 0));
+        Appointment appointment2 = new Appointment(p2, d2, treatments2, LocalDateTime.of(2022, 9, 16, 18, 0));
 
         //when
         underTest.update(id, appointment2);
@@ -273,11 +277,12 @@ public class AppointmentServiceTest {
         long id = -10;
         Address address = new Address("Long 14c", "London", "12-345");
         Patient p = new Patient("Jan Kowalski", address, "123456789");
+        Doctor d = new Doctor("Doc Doctorsky", "Doctor", "Cardio surgeon", "123123123");
         Treatment t = new Treatment("Back rub", 150.00);
         Treatment t2= new Treatment("Joints loosening", 250.00);
         List<Treatment> treatments = Arrays.asList(t, t2);
 
-        Appointment appointment = new Appointment(p, treatments, LocalDateTime.of(2022, 9, 15, 13, 40));
+        Appointment appointment = new Appointment(p, d, treatments, LocalDateTime.of(2022, 9, 15, 13, 40));
 
         //when
         assertThatThrownBy(() -> underTest.update(id, appointment))
@@ -309,11 +314,12 @@ public class AppointmentServiceTest {
         long id = 10;
         Address address = new Address("Long 14c", "London", "12-345");
         Patient p = new Patient("Jan Kowalski", address, "123456789");
+        Doctor d = new Doctor("Doc Doctorsky", "Doctor", "Cardio surgeon", "123123123");
         Treatment t = new Treatment("Back rub", 150.00);
         Treatment t2= new Treatment("Joints loosening", 250.00);
         List<Treatment> treatments = Arrays.asList(t, t2);
 
-        Appointment appointment = new Appointment(p, treatments, LocalDateTime.of(2022, 9, 15, 13, 40));
+        Appointment appointment = new Appointment(p, d, treatments, LocalDateTime.of(2022, 9, 15, 13, 40));
 
         assertThat(appointmentRepository.existsById(id)).isFalse();
 
@@ -332,11 +338,12 @@ public class AppointmentServiceTest {
         long id = 10;
         Address address = new Address("Long 14c", "London", "12-345");
         Patient p = null;
+        Doctor d = new Doctor("Doc Doctorsky", "Doctor", "Cardio surgeon", "123123123");
         Treatment t = new Treatment("Back rub", 150.00);
         Treatment t2= new Treatment("Joints loosening", 250.00);
         List<Treatment> treatments = Arrays.asList(t, t2);
 
-        Appointment appointment = new Appointment(p, treatments, LocalDateTime.of(2022, 9, 15, 13, 40));
+        Appointment appointment = new Appointment(p, d, treatments, LocalDateTime.of(2022, 9, 15, 13, 40));
 
 
         //when
@@ -355,9 +362,10 @@ public class AppointmentServiceTest {
         long id = 10;
         Address address = new Address("Long 14c", "London", "12-345");
         Patient p = new Patient("Jan Kowalski", address, "123456789");
+        Doctor d = new Doctor("Doc Doctorsky", "Doctor", "Cardio surgeon", "123123123");
 
 
-        Appointment appointment = new Appointment(p, null, LocalDateTime.of(2022, 9, 15, 13, 40));
+        Appointment appointment = new Appointment(p, d, null, LocalDateTime.of(2022, 9, 15, 13, 40));
 
 
         //when
@@ -376,11 +384,12 @@ public class AppointmentServiceTest {
         long id = 10;
         Address address = null;
         Patient p = new Patient("Jan Kowalski", address, "123456789");
+        Doctor d = new Doctor("Doc Doctorsky", "Doctor", "Cardio surgeon", "123123123");
         Treatment t = new Treatment("Back rub", 150.00);
         Treatment t2= new Treatment("Joints loosening", 250.00);
         List<Treatment> treatments = Arrays.asList(t, t2);
 
-        Appointment appointment = new Appointment(p, treatments, null);
+        Appointment appointment = new Appointment(p, d, treatments, null);
 
 
         //when
@@ -401,11 +410,12 @@ public class AppointmentServiceTest {
         long id = 10;
         Address address = new Address("Long 14c", "London", "12-345");
         Patient p = new Patient("Jan Kowalski", address, "123456789");
+        Doctor d = new Doctor("Doc Doctorsky", "Doctor", "Cardio surgeon", "123123123");
         Treatment t = new Treatment("Back rub", 150.00);
         Treatment t2= new Treatment("Joints loosening", 250.00);
         List<Treatment> treatments = Arrays.asList(t, t2);
 
-        Appointment appointment = new Appointment(p, treatments, LocalDateTime.of(2022, 9, 15, 13, 40));
+        Appointment appointment = new Appointment(p, d, treatments, LocalDateTime.of(2022, 9, 15, 13, 40));
 
         given(appointmentRepository.findById(id)).willReturn(Optional.of(appointment));
 
@@ -437,11 +447,12 @@ public class AppointmentServiceTest {
         //given
         Address address = new Address("Long 14c", "London", "12-345");
         Patient p = new Patient("Jan Kowalski", address, "123456789");
+        Doctor d = new Doctor("Doc Doctorsky", "Doctor", "Cardio surgeon", "123123123");
         Treatment t = new Treatment("Back rub", 150.00);
         Treatment t2= new Treatment("Joints loosening", 250.00);
         List<Treatment> treatments = Arrays.asList(t, t2);
 
-        Appointment appointment = new Appointment(p, treatments, LocalDateTime.of(2022, 9, 15, 13, 40));
+        Appointment appointment = new Appointment(p, d, treatments, LocalDateTime.of(2022, 9, 15, 13, 40));
 
         List<Appointment> appointments = new ArrayList<>();
         appointments.add(appointment);
@@ -460,11 +471,12 @@ public class AppointmentServiceTest {
         //given
         Address address = new Address("Long 14c", "London", "12-345");
         Patient p = new Patient("Jan Kowalski", address, "123456789");
+        Doctor d = new Doctor("Doc Doctorsky", "Doctor", "Cardio surgeon", "123123123");
         Treatment t = new Treatment("Back rub", 150.00);
         Treatment t2= new Treatment("Joints loosening", 250.00);
         List<Treatment> treatments = Arrays.asList(t, t2);
 
-        Appointment appointment = new Appointment(p, treatments, LocalDateTime.of(2022, 9, 15, 13, 40));
+        Appointment appointment = new Appointment(p, d, treatments, LocalDateTime.of(2022, 9, 15, 13, 40));
 
         List<Appointment> appointments = new ArrayList<>();
         given(appointmentRepository.findAll()).willReturn(appointments);
