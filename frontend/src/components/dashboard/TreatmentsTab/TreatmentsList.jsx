@@ -41,12 +41,12 @@ function TreatmentsList() {
       }
     });
   };
-  
+
   return (
     <div>
       <div className="flex relative dark:bg-main-dark-bg">
         <div className="fixed right-4 bottom-4" style={{ zIndex: "1000" }}>
-          <TooltipComponent content="Settings" >
+          <TooltipComponent content="Settings">
             <button
               type="button"
               style={{ background: "blue", borderRadius: "50%" }}
@@ -78,26 +78,27 @@ function TreatmentsList() {
             <Navbar />
 
             <div className="container mx-auto my-8">
-      <div className="h-12">
-        <button
-          onClick={() => navigate("/dashboard/treatments/add")}
-          className="rounded ml-3 bg-blue-700 text-white px-6 py-2 font-semibold">
-          Add Treatment
-        </button>
-      </div>
-
-      {treatments.map((treatment) => (
+              <div className="h-12">
+                <button
+                  onClick={() => navigate("/dashboard/treatments/add")}
+                  className="rounded ml-3 bg-blue-700 text-white px-6 py-2 font-semibold"
+                >
+                  Add Treatment
+                </button>
+              </div>
+              {treatments.map((treatment) => (
                 <Treatment
                   treatment={treatment}
                   deleteTreatment={deleteTreatment}
-                  key={treatment.id}></Treatment>
+                  key={treatment.id}
+                ></Treatment>
               ))}
-    </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default TreatmentsList
+export default TreatmentsList;

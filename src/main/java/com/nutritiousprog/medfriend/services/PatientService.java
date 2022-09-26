@@ -68,7 +68,7 @@ public class PatientService implements BasicService<Patient> {
         if (!exists)
             throw new ObjectNotFoundException("Object with given id was not found in database.");
 
-        addressRepository.delete(underChangePatient.getAddress());
+        //addressRepository.delete(underChangePatient.getAddress());
 
         underChangePatient.setName(newPatient.getName());
         underChangePatient.setPhoneNumber(newPatient.getPhoneNumber());

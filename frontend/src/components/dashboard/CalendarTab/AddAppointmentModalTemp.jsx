@@ -6,7 +6,7 @@ import Multiselect from "multiselect-react-dropdown";
 import TreatmentService from "../../../services/TreatmentService";
 import PatientService from "../../../services/PatientService";
 
-function AddAppointmentModal({ isOpen, onClose, onEventAdded }) {
+function AddAppointmentModalTemp({ isOpen, onClose, onEventAdded }) {
   const [treatmentsArr, setTreatments] = useState([]);
   const [patientsArr, setPatients] = useState([]);
 
@@ -181,4 +181,4 @@ function AddAppointmentModal({ isOpen, onClose, onEventAdded }) {
   );
 }
 
-export default AddAppointmentModal;
+export default AddAppointmentModalTemp;

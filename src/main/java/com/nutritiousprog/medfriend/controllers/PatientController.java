@@ -4,12 +4,14 @@ import com.nutritiousprog.medfriend.model.Patient;
 import com.nutritiousprog.medfriend.services.PatientService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/v1/")
 @AllArgsConstructor
@@ -43,6 +45,7 @@ public class PatientController {
         return ResponseEntity.ok(patient);
     }
 
+    @Transactional
     @PutMapping("/patients/{id}")
     public ResponseEntity<Patient> updatePatient(@PathVariable Long id, @RequestBody Patient patient) {
         patient = patientService.update(id, patient);

@@ -35,7 +35,7 @@ public class TreatmentService implements BasicService<Treatment>{
 
         boolean exists = treatmentRepository.existsById(id);
         if (!exists)
-            throw new ObjectNotFoundException("Object not found in database. Deleting address failed.");
+            throw new ObjectNotFoundException("Object not found in database. Deleting treatment failed.");
 
         treatmentRepository.deleteById(id);
         return true;
@@ -54,7 +54,7 @@ public class TreatmentService implements BasicService<Treatment>{
 
         boolean exists = treatmentRepository.existsById(id);
         if (!exists)
-            throw new ObjectNotFoundException("Object not found in database. Updating address failed.");
+            throw new ObjectNotFoundException("Object not found in database. Updating treatment failed.");
 
         underChangeTreatment.setName(newTreatment.getName());
         underChangeTreatment.setPrice(newTreatment.getPrice());
