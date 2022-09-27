@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "react-datetime/css/react-datetime.css";
 import Datetime from "react-datetime";
 import AppointmentService from "../../../services/AppointmentService";
 import Multiselect from "multiselect-react-dropdown";
@@ -11,14 +12,16 @@ function AddAppointmentModal({ isOpen, onClose, onEventAdded }) {
   const [treatmentsArr, setTreatments] = useState([]);
   const [patientsArr, setPatients] = useState([]);
   const [doctorsArr, setDoctros] = useState([]);
+  const [Cdate, setDate] = useState(new Date().toLocaleDateString("fr-FR"));
+  const [startDate, setStartDate] = useState(new Date());
 
   const [loading, setLoading] = useState(true);
   const [appointment, setAppointment] = useState({
     id: "",
     patient: {},
     doctor: {},
-    treatments: [],
-    date: new Date(),
+    treatment: [],
+    dateTime: new Date(),
   });
 
   useEffect(() => {
@@ -61,6 +64,14 @@ function AddAppointmentModal({ isOpen, onClose, onEventAdded }) {
 
     console.log(appointment);
 
+    AppointmentService.saveAppointment(appointment)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
     onClose();
   };
 
@@ -94,7 +105,7 @@ function AddAppointmentModal({ isOpen, onClose, onEventAdded }) {
       console.log(response.data);
       setAppointment({
         ...appointment,
-        treatments: [...appointment.treatments, response.data],
+        treatment: [...appointment.treatment, response.data],
       });
     } catch (error) {
       console.log(error);
@@ -119,7 +130,7 @@ function AddAppointmentModal({ isOpen, onClose, onEventAdded }) {
     }
     setAppointment({
       ...appointment,
-      treatments: leftTreatments,
+      treatment: leftTreatments,
     });
   };
 
@@ -187,9 +198,14 @@ function AddAppointmentModal({ isOpen, onClose, onEventAdded }) {
               <div className="flex flex-col">
                 <label for="patients">Choose a date:</label>
                 <Datetime
-                  value={appointment.date}
-                  name="date"
-                  onChange={(e) => handleChange(e)}
+                  name="dateTime"
+                  initialValue={new Date()}
+                  onChange={(d) => {
+                    setAppointment({
+                      ...appointment,
+                      dateTime: d.format("YYYY-MM-DD HH:mm"),
+                    });
+                  }}
                 />
               </div>
             </div>

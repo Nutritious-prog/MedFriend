@@ -3,11 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@date-io/date-fns": "^2.16.0",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
     "@fullcalendar/daygrid": "^5.11.3",
     "@fullcalendar/react": "^5.11.2",
     "@heroicons/react": "^2.0.11",
+    "@material-ui/pickers": "^3.3.10",
     "@mui/icons-material": "^5.10.3",
     "@mui/material": "^5.10.5",
     "@syncfusion/ej2-base": "^20.2.48",
